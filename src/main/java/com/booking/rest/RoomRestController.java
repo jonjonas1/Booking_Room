@@ -32,7 +32,7 @@ public class RoomRestController {
 	}
 	
 	@GetMapping("/rooms/{roomId}")
-	public Room getEmployee(@PathVariable int roomId) {
+	public Room getRoom(@PathVariable int roomId) {
 		Room theRoom = roomService.findById(roomId);
 
 		if (theRoom == null) {
@@ -42,7 +42,7 @@ public class RoomRestController {
 	}
 	
 	@PostMapping("/rooms")
-	public Room addEmployee(@RequestBody Room theRoom) {
+	public Room addRoom(@RequestBody Room theRoom) {
 
 		// also just in case they pass an id in JSON ... set id to 0
 		// this is to force a save of new item ... instead of update
@@ -53,7 +53,7 @@ public class RoomRestController {
 	}
 	
 	@PutMapping("/rooms")
-	public Room updateEmployee(@RequestBody Room theRoom) {
+	public Room updateRoom(@RequestBody Room theRoom) {
 
 		roomService.save(theRoom);
 
@@ -61,16 +61,16 @@ public class RoomRestController {
 	}
 	
 	@DeleteMapping("/rooms/{roomId}")
-	public String deleteEmployee(@PathVariable int roomId) {
+	public String deleteRoom(@PathVariable int roomId) {
 
-		Room tempEmployee = roomService.findById(roomId);
+		Room tempRoom = roomService.findById(roomId);
 		// throw exception if null
-		if (tempEmployee == null) {
-			throw new RuntimeException("Employee id not found - " + roomId);
+		if (tempRoom == null) {
+			throw new RuntimeException("Room id not found - " + roomId);
 		}
 		
 		roomService.deleteById(roomId);
 
-		return "Deleted employee id - " + roomId;
+		return "Deleted room id - " + roomId;
 	}
 }
