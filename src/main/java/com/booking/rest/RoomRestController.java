@@ -19,12 +19,13 @@ import com.booking.service.RoomService;
 @RequestMapping("/api")
 public class RoomRestController {
 	
+	@Autowired
 	private RoomService roomService;
 	
-	@Autowired
-	public RoomRestController(RoomService theRoomService) {
-		roomService=theRoomService;
-	}
+//	@Autowired
+//	public RoomRestController(RoomService theRoomService) {
+//		roomService=theRoomService;
+//	}
 	
 	@GetMapping("/rooms")
 	public List<Room> findAll() {
