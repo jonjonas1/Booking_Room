@@ -4,18 +4,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.booking.dao.RoomRepository;
 import com.booking.entity.Room;
 
+@Service
 public class RoomServiceImpl implements RoomService {
 	
+	@Autowired
 	private RoomRepository roomRepository;
 	
-	@Autowired
-	public RoomServiceImpl(RoomRepository theRoomRepository) {
-		roomRepository = theRoomRepository;
-	}
+//	@Autowired
+//	public RoomServiceImpl(RoomRepository theRoomRepository) {
+//		roomRepository = theRoomRepository;
+//	}
 
 	@Override
 	public List<Room> findAll() {

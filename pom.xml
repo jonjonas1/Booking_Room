@@ -8,8 +8,8 @@
 		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.booking.eco</groupId>
-	<artifactId>Booking</artifactId>
+	<groupId>com.booking.room</groupId>
+	<artifactId>Booking_Room</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Booking</name>
 	<description>microservices project booking.com</description>
