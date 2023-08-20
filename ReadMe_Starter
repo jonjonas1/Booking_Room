@@ -1,0 +1,13 @@
+READ ME: Booking Guest
+
+Dependents on Booking_EurekaServer
+
+* This application runs only after Booking_EurekaServer runs success: Run as Spring Boot App
+* Right click on "BookingGuestApplication.java" Run as Spring Boot App
+* This app is discoverable by Eureka Server app. 
+
+local browser: http://localhost:8080/api/rooms
+
+* If you want to run this app stand alone, independent, than temporary comment_out/remove 
+	netflix-eureka-client dependency.  
+
