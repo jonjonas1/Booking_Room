@@ -111,10 +111,14 @@ public class RoomRestController {
 		Room theroom = roomService.findById(roomId);
 
 		guestRoomResponse.setRoom(theroom);
-
-		// then get all Guest registered to room
-		// to connect from one service to another service we need restTemplate
+	
+		/* to connect from one service to another service we need restTemplate
+		 * if added @loadBalanced on getRestTemplate in main app, we can call directly by 
+		 * name "booking_guest"
+		 * ....getForObject("http://BOOKING_GUEST/api/guests/" + roomId, Guest.class);
+		 */
 		Guest listOfGuests = restTemplate.getForObject("http://localhost:8081/api/guests/" + roomId, Guest.class);
+		
 		guestRoomResponse.setGuests(listOfGuests);
 
 
