@@ -72,12 +72,12 @@ public class Guest {
 		this.email = email;
 	}
 
-	public int getRoomNumber() {
+	public int getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomNumber(int roomNumber) {
-		this.roomId = roomNumber;
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
 	}
 
 	@Override
