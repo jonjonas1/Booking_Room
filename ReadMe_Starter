@@ -11,3 +11,9 @@ local browser: http://localhost:8080/api/rooms
 * If you want to run this app stand alone, independent, than temporary comment_out/remove 
 	netflix-eureka-client dependency.  
 
+Notes: Lombok dependency did not work "GuestRoomResponse.java"
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+  Implemented manual getters setters
+	

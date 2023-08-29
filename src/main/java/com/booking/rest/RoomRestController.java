@@ -3,6 +3,12 @@ package com.booking.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
 import com.booking.entity.Room;
+import com.booking.model.Guest;
+import com.booking.model.GuestRoomResponse;
 import com.booking.service.RoomService;
 
 @RestController
@@ -21,6 +31,9 @@ public class RoomRestController {
 	
 	@Autowired
 	private RoomService roomService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 //	@Autowired
 //	public RoomRestController(RoomService theRoomService) {
@@ -40,6 +53,12 @@ public class RoomRestController {
 			throw new RuntimeException("Room id not found - " + roomId);
 		}
 		return theRoom;
+	}
+	//same as above getRoom=getRoomById
+	@GetMapping("/rooms/byid/{roomId}")
+	public ResponseEntity<Room> getRoomById(@PathVariable Integer roomId){
+		Room theroom = roomService.findById(roomId);
+		return new ResponseEntity<>(theroom, HttpStatus.OK);
 	}
 	
 	@PostMapping("/rooms")
@@ -74,4 +93,73 @@ public class RoomRestController {
 
 		return "Deleted room id - " + roomId;
 	}
+	
+	@GetMapping("/roomtype/{id}")
+	public String getRoomType(@PathVariable int id) {
+		String theRoom = roomService.findById(id).getRoomType();
+		
+		return theRoom;
+	}
+	
+	@GetMapping("/rooms/id/{roomId}")
+	public ResponseEntity<GuestRoomResponse> getAllDataBasedonRoomId(@PathVariable Integer roomId){
+		GuestRoomResponse guestRoomResponse = new GuestRoomResponse();
+		
+		//1sr get room detail
+		Room theroom = roomService.findById(roomId);
+		
+		guestRoomResponse.setRoom(theroom);
+		
+		//then get all Guest registered to room
+		//to connect from one service to another service we need restTemplate
+//		try {
+			java.util.List<Guest> listOfGuests = restTemplate.getForObject("http://localhost:8081/api/guests/"+roomId, List.class);
+			guestRoomResponse.setGuests(listOfGuests);
+			
+//		}
+//		catch (RestClientException e) {
+//			e.printStackTrace();
+//		}
+		
+		return new ResponseEntity<GuestRoomResponse>(guestRoomResponse, HttpStatus.OK);
+	}
+	
+	
+	// test Room method below is working fine
+	@RequestMapping("/rooms/test/{roomId}")
+	public ResponseEntity<GuestRoomResponse> test(@PathVariable Integer roomId){
+		GuestRoomResponse guestRoomResponse = new GuestRoomResponse();
+		
+		Room theroom = roomService.findById(roomId);
+		guestRoomResponse.setRoom(theroom);
+		
+		return new ResponseEntity<>(guestRoomResponse, HttpStatus.OK);
+	}
+	
+	// Try guest input still in progress
+	@GetMapping("/rooms/ddd/{roomId}")
+	public GuestRoomResponse getTheGuest(@PathVariable Integer roomId){
+		GuestRoomResponse guestRoomResponse = new GuestRoomResponse();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<GuestRoomResponse> requestEntity = new HttpEntity<>(guestRoomResponse, headers);
+		
+		List<Guest> listOfGuests = restTemplate.getForObject("http://localhost:8081/api/guests/"+roomId, List.class);
+		guestRoomResponse.setGuests(listOfGuests);
+		
+		
+//		ResponseEntity<GuestRoomResponse> response = restTemplate.postForEntity("http://localhost:8081/api/guests/"+roomId, requestEntity, String.class);
+		
+		return new ResponseEntity<GuestRoomResponse>(guestRoomResponse, HttpStatus.OK).getBody();
+	}
+	
+	// test below guest working fine
+	@RequestMapping("/rooms/guest/{roomId}")
+	public String ddd(@PathVariable Integer roomId){
+		String micro ="http://localhost:8081/api/guests/"+roomId;
+		String response = restTemplate.getForObject(micro, String.class);
+		return response;
+	}
+	
 }
