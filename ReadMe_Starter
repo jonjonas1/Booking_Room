@@ -20,4 +20,6 @@ Notes: Lombok dependency did not work "GuestRoomResponse.java"
 	@NoArgsConstructor
 	@AllArgsConstructor
   Implemented manual getters setters
-	
+=================================================================
+Calls rood id and which guest reserved the room
+	http://localhost:8080/api/rooms/id/3

@@ -1,5 +1,7 @@
 package com.booking.model;
 
+import java.util.List;
+
 import com.booking.entity.Room;
 
 public class GuestRoomResponse {
@@ -8,14 +10,13 @@ public class GuestRoomResponse {
 	 
 	private Room room;
 	
-	private Guest guests;
+	private List <Guest> guests;
 	
 	public GuestRoomResponse() {
 		
 	}
 
-	public GuestRoomResponse(Room room, Guest guests) {
-		super();
+	public GuestRoomResponse(Room room, List<Guest> guests) {
 		this.room = room;
 		this.guests = guests;
 	}
@@ -28,11 +29,17 @@ public class GuestRoomResponse {
 		this.room = room;
 	}
 
-	public Guest getGuests() {
+	public List<Guest> getGuests() {
 		return guests;
 	}
 
-	public void setGuests(Guest guests) {
+	public void setGuests(List<Guest> guests) {
 		this.guests = guests;
 	}
+
+	@Override
+	public String toString() {
+		return "GuestRoomResponse [room=" + room + ", guests=" + guests + "]";
+	}
+
 }
