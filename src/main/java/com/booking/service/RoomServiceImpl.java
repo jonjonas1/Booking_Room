@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.booking.dao.RoomRepository;
 import com.booking.entity.Room;
@@ -49,6 +50,11 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void deleteById(int theId) {
 		roomRepository.deleteById(theId);
+	}
+
+	@Override
+	public List<Room> findByRoomStatus(@PathVariable boolean roomStatus) {
+		return roomRepository.findByRoomStatus(roomStatus);
 	}
 	
 	
