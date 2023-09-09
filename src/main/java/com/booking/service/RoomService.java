@@ -16,4 +16,5 @@ public interface RoomService {
 
 	public void deleteById(int theId);
 	
+	public List<Room> findByRoomStatus(boolean roomStatus);
 }

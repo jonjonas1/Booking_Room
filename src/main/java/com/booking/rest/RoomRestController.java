@@ -55,7 +55,12 @@ public class RoomRestController {
 		Room theroom = roomService.findById(roomId);
 		return new ResponseEntity<>(theroom, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/rooms/status/{roomStatus}")
+	public List<Room> getRoomByStatus(@PathVariable boolean roomStatus) {
+		return roomService.findByRoomStatus(roomStatus);
+	}
+	
 	@PostMapping("/rooms")
 	public Room addRoom(@RequestBody Room theRoom) {
 
